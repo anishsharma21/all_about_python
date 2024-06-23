@@ -81,3 +81,26 @@ def wontrun():
     user_information('anish', 'sharma', age=20, location='australia')
 
     print("My list:\n\t-hi")
+    
+    try:
+        print(5/0)
+    except ZeroDivisionError as e:
+        print(e)
+    
+    num1 = 0
+    num2 = 0
+    is_active = True
+    while is_active:
+        try:
+            num1 = int(input("First number: "))
+            if num1 == 0:
+                is_active = False
+                break
+            num2 = int(input("Second number: "))
+            if num2 == 0:
+                is_active = False
+                break
+        except ValueError:
+            print("Please enter a valid number.\n")
+            continue
+        print(f"{num1} + {num2} = {num1+num2}\n")
