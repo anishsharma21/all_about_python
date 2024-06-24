@@ -8,8 +8,12 @@ class SinglyLinkedList:
         self.head = head
     
     def set_head(self, value):
-        new_head_node = Node(value, self.head)
-        self.head = new_head_node
+        if not self.head:
+            self.head = Node(value)
+            return
+        head_node = Node(value, self.head)
+        self.head = head_node
+        return head_node
     
     def is_empty(self):
         if not self.head:
@@ -146,7 +150,17 @@ class SinglyLinkedList:
         node.next.next = node
         node.next = None
         return next_node
-
+    
+    def find_middle(self):
+        if self.is_empty():
+            return
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow.value
+    
 # Create a linked list with values 1 -> 2 -> 3
 linked_list = SinglyLinkedList()
 linked_list.append(1)
