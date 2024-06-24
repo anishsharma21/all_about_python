@@ -7,30 +7,57 @@ class SinglyLinkedList:
     def __init__(self, head=None):
         self.head = head
     
-    def set_head(self, value):
-        if not self.head:
-            self.head = Node(value)
-            return
-        head_node = Node(value, self.head)
-        self.head = head_node
-        return head_node
-    
     def is_empty(self):
         if not self.head:
             print("\nlist is empty...\n")
             return True
         return False
-    
+
+    def prepend(self, value): ##
+        new_head = Node(value, self.head)
+        self.head = new_head
+        return new_head
+
     def append(self, value):
-        new_node = Node(value)
-        if self.is_empty():
-            self.head = new_node
-        else:
-            cur_node = self.head
-            while cur_node.next:
-                cur_node = cur_node.next
-            cur_node.next = new_node
-        return new_node
+        if not self.head:
+            self.head = Node(value)
+            return self.head
+        cur_node = self.head
+        while cur_node.next:
+            cur_node = cur_node.next
+        cur_node.next = Node(value)
+        return cur_node.next
+    
+    def insert_after_value(self, target, value):
+        if not self.head:
+            print("\nlist is empty...\n")
+            return None
+        cur_node = self.head
+        while cur_node:
+            if cur_node.value == target:
+                cur_node.next = Node(value, cur_node.next)
+                return cur_node.next
+            cur_node = cur_node.next
+        print("\ntarget value not found :(\n")
+        return None
+
+    def delete_by_value(self, target):
+        if not self.head:
+            print("\nlist is empty...\n")
+            return None
+        if self.head.value == target:
+            head = self.head
+            self.head = self.head.next
+            return head
+        node = self.head
+        while node.next:
+            if node.next.value == target:
+                deleted_node = node.next
+                node.next = node.next.next
+                return deleted_node
+            node = node.next
+        print("\ntarget value not found...\n")
+        return None
             
     def traverse(self):
         if self.is_empty():
@@ -42,33 +69,6 @@ class SinglyLinkedList:
                 print(" --> ", end='')
             cur_node = cur_node.next
         print()
-    
-    def insert_after_value(self, target, value):
-        if self.is_empty():
-            return
-        cur_node = self.head
-        while cur_node:
-            if cur_node.value == target:
-                new_node = Node(value)
-                new_node.next = cur_node.next
-                cur_node.next = new_node
-                return new_node
-            cur_node = cur_node.next
-        print(f"\ntarget value, '{target}', not found...\n")
-    
-    def delete_by_value(self, target):
-        if self.is_empty():
-            return
-        if self.head.value == target:
-            self.head = self.head.next
-            return
-        prev_node = self.head
-        while prev_node.next:
-            if prev_node.next.value == target:
-                prev_node.next = prev_node.next.next
-                return
-            prev_node = prev_node.next
-        print(f"\ntarget value, '{target}', not found...\n")
     
     def delete_by_position(self, position):
         """Position is 1-indexed. Deletes a node at the given position."""
