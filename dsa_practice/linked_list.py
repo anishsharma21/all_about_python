@@ -96,13 +96,14 @@ class SinglyLinkedList:
         self.head = self.head.next
     
     def delete_last_node(self):
-        if self.is_empty() or not self.head.next:
-            self.head = None
-            return
-        prev_node = self.head
-        while prev_node.next.next:
-            prev_node = prev_node.next
-        prev_node.next = None
+        if not self.head or not self.head.next:
+            self.head, deleted_node = None, self.head
+        else:
+            cur_node = self.head
+            while cur_node.next.next:
+                cur_node = cur_node.next
+            deleted_node = cur_node.next
+        return deleted_node
     
     def search(self, target):
         if self.is_empty():
@@ -150,6 +151,19 @@ class SinglyLinkedList:
         node.next.next = node
         node.next = None
         return next_node
+    
+    def detect_loop(self):
+        if not self.head:
+            print("list is empty")
+            return False
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                return True
+        return False
     
     def find_middle(self):
         if self.is_empty():
