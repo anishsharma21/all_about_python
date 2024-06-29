@@ -104,3 +104,5 @@ def wontrun():
             print("Please enter a valid number.\n")
             continue
         print(f"{num1} + {num2} = {num1+num2}\n")
+
+    print(float('3.14'))
