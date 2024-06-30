@@ -1,5 +1,6 @@
 import random
 import math
+import itertools
 
 def skip():
     random_int = random.random()
@@ -104,17 +105,75 @@ def skip():
     print(count_vowels('dracula')) # 3
     print(count_vowels('tbhh')) # 0
 
+    def remove_punctuation(string: str): 
+        punctuation = [',', '.', "'", '"', ';']
+        for punc in punctuation:
+            string.replace(punc, '')
 
+    def fibonacci():
+        a = 0
+        b = 1
+        while True:
+            yield a
+            future = a + b
+            a = b
+            b = future
 
+    fib_gen = fibonacci()
+    for _ in range(10):
+        print(next(fib_gen))
 
+    def p_norm(v, p):
+        totalsum = sum([val**p for val in v])
+        print(totalsum)
+        root_p = totalsum ** (1/p)
+        return root_p
 
+    vectors = [1, 2, 3, 4, 5]
+    p = 2
+    p_norm_val = p_norm(vectors, p)
+    print(p_norm_val)
 
+def generate_permutations(chars, current=''):
+    if len(chars) == 0:
+        print(current)
+    else:
+        for i in range(len(chars)):
+            new_chars = chars[:i] + chars[i+1:]
+            new_current = current + chars[i]
+            generate_permutations(new_chars, new_current)
 
+    generate_permutations('catdog')
 
+    characters = 'catdog'
+    all_permutations = itertools.permutations(characters, len(characters))
+    for perm in all_permutations:
+        print(''.join(perm))
 
+    def find_maximum_divisions_by_2(n):
+        if n < 2:
+            return 0
+        divided_by_2 = n / 2
+        return 1 + find_maximum_divisions_by_2(divided_by_2)
 
+    print(find_maximum_divisions_by_2(55))
 
+    forms_of_exchange = [0.05, 0.10, 0.20, 0.5, 1, 2, 5]
+    def make_change(charged, given):
+        diff = round(given - charged, 2)
+        if diff < 0:
+            return {}
+        change = {}
+        for coin in reversed(forms_of_exchange):
+            if diff >= coin:
+                times = diff // coin
+                change[coin] = int(times)
+                diff -= coin * times
+                if not diff:
+                    return change
+        return change
 
-
-
-
+    print(make_change(5, 18.65))
+    
+    
+    
