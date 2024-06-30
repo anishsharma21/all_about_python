@@ -1,6 +1,9 @@
 import random
 import math
 import itertools
+import os
+import time
+import numpy as np
 
 def skip():
     random_int = random.random()
@@ -171,9 +174,121 @@ def generate_permutations(chars, current=''):
                 diff -= coin * times
                 if not diff:
                     return change
-        return change
+        if not diff:
+            return change
+        return {}
 
     print(make_change(5, 18.65))
-    
-    
-    
+
+    def find_counts(sentence):
+        words = sentence.split(' ')
+        word_counts = {}
+        for word in words:
+            if word not in word_counts:
+                word_counts[word] = 1
+            else:
+                word_counts[word] += 1
+        return word_counts
+
+    user_input = input("Sentence: ")
+    print(find_counts(user_input))
+
+    class Flower:
+        def __init__(self, name: str='flower', num_petals: int=5, price: float=5.0):
+            self.name = name
+            self.num_petals = num_petals
+            self.price = price
+            
+    class Vector:
+        """Represent a vector in a multidimensional space."""
+        def __init__(self, d):
+            self._coords = [0] * d
+        
+        def __len__(self):
+            return len(self._coords)
+        
+        def __getitem__(self, j):
+            return self._coords[j]
+
+        def __setitem__(self, j, val):
+            self._coords[j] = val
+        
+        def __add__(self, other):
+            if len(self) != len(other):
+                raise ValueError('dimensions must agree')
+            result = Vector(len(self))
+            for j in range(len(self)):
+                result[j] = self[j] + other[j]
+            return result
+        
+        def __eq__(self, other):
+            return self._coords == other._coords
+        
+        def __ne__(self, other):
+            return not self == other
+        
+        def __str__(self):
+            return '<' + str(self._coords)[1:-1] + '>'
+
+        def __sub__(self, other):
+            if len(self) != len(other):
+                raise ValueError('dimensions must agree')
+            result = Vector(len(self))
+            for j in range(len(self)):
+                result[j] = self[j] - other[j]
+            return result
+
+        def __neg__(self):
+            result = Vector(len(self))
+            for j in range(len(self)):
+                result[j] = -self[j]
+            return result
+
+    v1 = Vector(3)
+    v2 = Vector(3)
+
+    v1.__setitem__(0, 1)
+    v1.__setitem__(1, 4)
+    v1.__setitem__(2, -2)
+    v2.__setitem__(0, 4)
+    v2.__setitem__(1, 2)
+    v2.__setitem__(2, 9)
+    print(str(v1))
+    print(str(v2))
+
+    print(v1 - v2)
+    print(-v1)
+
+    def initialize_board(n):
+        return np.random.choice([0, 1], size=(n, n))
+
+    def print_board(board):
+        os.system('clear' if os.name == 'posix' else 'cls')
+        for row in board:
+            print(' '.join('■' if cell else ' ' for cell in row))
+
+    def count_neighbors(board, x, y):
+        n = len(board)
+        return sum(board[(x + i) % n][(y + j) % n] for i in (-1, 0, 1) for j in (-1, 0, 1) if (i, j) != (0, 0))
+
+    def update_board(board):
+        new_board = np.copy(board)
+        n = len(board)
+        for x in range(n):
+            for y in range(n):
+                neighbors = count_neighbors(board, x, y)
+                if board[x][y] and not 2 <= neighbors <= 3:
+                    new_board[x][y] = 0
+                elif not board[x][y] and neighbors == 3:
+                    new_board[x][y] = 1
+        return new_board
+
+    def game_of_life(n=20, generations=100, sleep_time=0.1):
+        board = initialize_board(n)
+        for _ in range(generations):
+            print_board(board)
+            board = update_board(board)
+            time.sleep(sleep_time)
+
+    if __name__ == "__main__":
+        game_of_life()

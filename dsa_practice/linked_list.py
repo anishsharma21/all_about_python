@@ -125,6 +125,16 @@ class SinglyLinkedList:
             length += 1
             cur_node = cur_node.next
         return length
+    
+    def __len__(self):
+        if self.is_empty():
+            return 0
+        length = 0
+        cur_node = self.head
+        while cur_node:
+            length += 1
+            cur_node = cur_node.next
+        return length
 
     def reverse(self, node=None):
         if self.is_empty():
@@ -190,7 +200,8 @@ linked_list.another_reverse()
 
 # Print the reversed list
 print("Reversed list:")
-linked_list.traverse()    
+linked_list.traverse()
+print(len(linked_list))    
 
 # node1 = Node(5)
 # sll = SinglyLinkedList(node1)
