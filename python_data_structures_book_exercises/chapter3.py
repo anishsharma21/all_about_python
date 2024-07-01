@@ -42,4 +42,19 @@ def skip():
         
         
     my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24]
-    print(binary_search(my_arr, 5))
+    print(binary_search(my_arr, 24))
+
+    def bad_fibonacci(n):
+        if n <= 1:
+            return 1
+        return bad_fibonacci(n-2) + bad_fibonacci(n-1)
+
+    print(bad_fibonacci(7))
+
+    def good_fibonacci(n):
+        if n <= 1:
+            return n, 0
+        a, b = good_fibonacci(n-1)
+        return (a+b, a)
+
+    print(good_fibonacci(7))
