@@ -292,3 +292,37 @@ def generate_permutations(chars, current=''):
 
     if __name__ == "__main__":
         game_of_life()
+
+    start_time = time.time()
+    for _ in range(100000):
+        pass
+    end_time = time.time()
+    print(end_time - start_time)
+
+    my_list = [val for val in range(10000000)]
+    start_time = time.time()
+    print(max(my_list))
+    end_time = time.time()
+    print(end_time - start_time)
+
+    def unique(s):
+        for i in range(len(s)):
+            for j in range(i+1, len(s)):
+                if s[i] == s[j]:
+                    return False
+        return True
+
+    start_time = time.time()
+    print(unique('hi there' * 10000000))
+    end_time = time.time()
+    print(end_time - start_time)
+
+
+
+
+
+
+
+
+
+
