@@ -1,3 +1,5 @@
+import math
+
 def skip():
     def factorial(n):
         if n < 2:
@@ -112,18 +114,43 @@ def skip():
     my_arr = [1, 2, 3, 4, 5]
     print(binary_sum(my_arr, 0, 5))
 
-def iterative_binary_search(arr, target):
-    low, high = 0, len(arr) - 1
-    while low <= high:
-        mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] > target:
-            high = mid-1
-        else:
-            low = mid+1
-    return -1
+    def iterative_binary_search(arr, target):
+        low, high = 0, len(arr) - 1
+        while low <= high:
+            mid = (low + high) // 2
+            if arr[mid] == target:
+                return mid
+            elif arr[mid] > target:
+                high = mid-1
+            else:
+                low = mid+1
+        return -1
 
-my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24, 55]
-print(iterative_binary_search(my_arr, 1))
+    my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24, 55]
+    print(iterative_binary_search(my_arr, 1))
 
+    def iterative_reverse(arr):
+        idx = 0
+        while idx != len(arr) // 2:
+            arr[idx], arr[len(arr) - 1 - idx] = arr[len(arr) - 1 - idx], arr[idx]
+            idx += 1
+        return arr
+
+    my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24, 55]
+    print(iterative_reverse(my_arr))
+
+    def find_min_max(arr, minval=None, maxval=None, idx=None):
+        if minval is None:
+            minval = math.inf
+            maxval = -math.inf
+            idx = 0
+        if idx > len(arr) - 1:
+            return minval, maxval
+        if arr[idx] > maxval:
+            maxval = arr[idx]
+        if arr[idx] < minval:
+            minval = arr[idx]
+        return find_min_max(arr, minval, maxval, idx+1)
+
+    my_arr = [3, 6, 12, 8, 23, 99, 10, -2]
+    print(find_min_max(my_arr))
