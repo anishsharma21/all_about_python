@@ -101,4 +101,29 @@ def skip():
     my_arr = [1, 2, 3, 4, 5]
     print(binary_sum(my_arr))
 
+    def binary_sum(arr, start, stop):
+        if start >= stop:
+            return 0
+        elif start == stop - 1:
+            return arr[start]
+        mid = (start + stop) // 2
+        return binary_sum(arr, start, mid) + binary_sum(arr, mid, stop)
+
+    my_arr = [1, 2, 3, 4, 5]
+    print(binary_sum(my_arr, 0, 5))
+
+def iterative_binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] > target:
+            high = mid-1
+        else:
+            low = mid+1
+    return -1
+
+my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24, 55]
+print(iterative_binary_search(my_arr, 1))
 
