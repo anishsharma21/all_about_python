@@ -58,3 +58,47 @@ def skip():
         return (a+b, a)
 
     print(good_fibonacci(7))
+
+    def recursion_sum(arr, idx=0):
+        if idx == len(arr) - 1:
+            return arr[idx]
+        return arr[idx] + recursion_sum(arr, idx+1)
+
+    my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24]
+    print(recursion_sum(my_arr))
+
+    def reverse_arr(arr, idx=0):
+        if idx == len(arr) // 2:
+            return arr
+        arr[idx], arr[len(arr) - 1 - idx] = arr[len(arr) - 1 - idx], arr[idx]
+        return reverse_arr(arr, idx+1)
+
+    my_arr = [1, 2, 5, 6, 6, 7, 8, 13, 14, 18, 24, 5]
+    print(reverse_arr(my_arr))
+
+    def power(x, n):
+        if n == 0:
+            return 1
+        return x * power(x, n-1)
+    print(power(2, 5))
+
+    def power(x, n):
+        if n == 0:
+            return 1
+        partial = power(x, n // 2)
+        result = partial * partial
+        if result % 2 == 1:
+            result *= x
+        return result
+
+    def binary_sum(arr, idx=0):
+        if idx == len(arr) // 2:
+            if len(arr) % 2 == 0:
+                return 0
+            return arr[idx]
+        return arr[idx] + arr[len(arr) - 1 - idx] + binary_sum(arr, idx+1)
+
+    my_arr = [1, 2, 3, 4, 5]
+    print(binary_sum(my_arr))
+
+
