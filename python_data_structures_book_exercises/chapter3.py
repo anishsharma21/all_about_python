@@ -154,3 +154,40 @@ def skip():
 
     my_arr = [3, 6, 12, 8, 23, 99, 10, -2]
     print(find_min_max(my_arr))
+
+def logbasetwo(n):
+    if n <= 1:
+        return 0
+    return 1 + logbasetwo(n // 2)
+
+print(logbasetwo(15))
+
+def is_unique(arr):
+    for i in range(len(arr)-1):
+        for j in range(i+1, len(arr)):
+            if arr[i] == arr[j]:
+                return False
+    return True    
+
+my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55]
+print(is_unique(my_arr))
+
+def recursive_multiplication(n, m):
+    if m <= 1:
+        return n
+    return n + recursive_multiplication(n, m-1)
+
+print(recursive_multiplication(2, 4))
+
+def is_palindrome(s, start=None, end=None):
+    if start is None:
+        start = 0
+        end = len(s) - 1
+    if start >= end:
+        return True
+    if s[start] != s[end]:
+        return False
+    return is_palindrome(s, start+1, end-1)
+
+print(is_palindrome('happy'))
+print(is_palindrome('ihihi'))
