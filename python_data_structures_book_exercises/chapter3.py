@@ -201,11 +201,37 @@ def skip():
             if arr[track] % 2 == 0:
                 arr[base], arr[track] = arr[track], arr[base]
                 base += 1
-                track += 1
-            else:
-                track += 1
+            track += 1
         return arr
 
-    my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55]
-    print(even_before_odd(my_arr))
+    my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55, 4]
+    print(even_before_odd(my_arr))    
 
+    def rearrange(S, k):
+        if len(S) <= 1:
+            return S
+        s1 = [x for x in S if x <= k]
+        s2 = [x for x in S if x > k]
+        return s1 + s2
+
+    my_arr = [3, 6, 12, 8, 23, 99, 10, -2]
+    print(rearrange(my_arr, 12))
+
+    def find_numbers_sum(S, k, i=None, j=None):
+        if len(S) <= 1:
+            return -1
+        if i is None:
+            i = 0
+            j = 1
+        if S[i] + S[j] == k:
+            return i, j
+        if j == len(S) - 1:
+            i += 1
+            j = i
+        if i == len(S) - 1:
+            return -1
+        j += 1
+        return find_numbers_sum(S, k, i, j)
+
+    my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55, 4]
+    print(find_numbers_sum(my_arr, 62)) 
