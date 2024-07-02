@@ -155,39 +155,57 @@ def skip():
     my_arr = [3, 6, 12, 8, 23, 99, 10, -2]
     print(find_min_max(my_arr))
 
-def logbasetwo(n):
-    if n <= 1:
-        return 0
-    return 1 + logbasetwo(n // 2)
+    def logbasetwo(n):
+        if n <= 1:
+            return 0
+        return 1 + logbasetwo(n // 2)
 
-print(logbasetwo(15))
+    print(logbasetwo(15))
 
-def is_unique(arr):
-    for i in range(len(arr)-1):
-        for j in range(i+1, len(arr)):
-            if arr[i] == arr[j]:
-                return False
-    return True    
+    def is_unique(arr):
+        for i in range(len(arr)-1):
+            for j in range(i+1, len(arr)):
+                if arr[i] == arr[j]:
+                    return False
+        return True    
 
-my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55]
-print(is_unique(my_arr))
+    my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55]
+    print(is_unique(my_arr))
 
-def recursive_multiplication(n, m):
-    if m <= 1:
-        return n
-    return n + recursive_multiplication(n, m-1)
+    def recursive_multiplication(n, m):
+        if m <= 1:
+            return n
+        return n + recursive_multiplication(n, m-1)
 
-print(recursive_multiplication(2, 4))
+    print(recursive_multiplication(2, 4))
 
-def is_palindrome(s, start=None, end=None):
-    if start is None:
-        start = 0
-        end = len(s) - 1
-    if start >= end:
-        return True
-    if s[start] != s[end]:
-        return False
-    return is_palindrome(s, start+1, end-1)
+    def is_palindrome(s, start=None, end=None):
+        if start is None:
+            start = 0
+            end = len(s) - 1
+        if start >= end:
+            return True
+        if s[start] != s[end]:
+            return False
+        return is_palindrome(s, start+1, end-1)
 
-print(is_palindrome('happy'))
-print(is_palindrome('ihihi'))
+    print(is_palindrome('happy'))
+    print(is_palindrome('ihihi'))
+
+    def even_before_odd(arr):
+        if len(arr) < 2:
+            return arr
+        base = 0
+        track = 1
+        while track < len(arr):
+            if arr[track] % 2 == 0:
+                arr[base], arr[track] = arr[track], arr[base]
+                base += 1
+                track += 1
+            else:
+                track += 1
+        return arr
+
+    my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55]
+    print(even_before_odd(my_arr))
+
