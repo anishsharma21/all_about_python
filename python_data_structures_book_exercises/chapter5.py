@@ -94,35 +94,79 @@ def insertion_sort(arr):
                 break
             track -= 1
 
-my_arr = [2, 1, 4, 3, 9, 0, -5]
-insertion_sort(my_arr)
-print(my_arr)
-print(count)
+    my_arr = [2, 1, 4, 3, 9, 0, -5]
+    insertion_sort(my_arr)
+    print(my_arr)
+    print(count)
 
-class CaesarCipher:
-    def __init__(self, shift):
-        self._backward = ''.join([chr((k + shift) % 26+ ord('A')) for k in range(26)])
-        self._forward = ''.join([chr((k - shift) % 26 + ord('A')) for k in range(26)])
-    
-    def encrypt(self, secret):
-        return self._transform(secret, self._forward)
-    
-    def decrypt(self, secret):
-        return self._transform(secret, self._backward)
-    
-    def _transform(self, original, code):
-        msg = list(original)
-        for k in range(len(msg)):
-            if msg[k].isupper():
-                j = ord(msg[k]) - ord('A')
-                msg[k] = code[j]
-        return ''.join(msg)
+    class CaesarCipher:
+        def __init__(self, shift):
+            self._backward = ''.join([chr((k + shift) % 26+ ord('A')) for k in range(26)])
+            self._forward = ''.join([chr((k - shift) % 26 + ord('A')) for k in range(26)])
+        
+        def encrypt(self, secret):
+            return self._transform(secret, self._forward)
+        
+        def decrypt(self, secret):
+            return self._transform(secret, self._backward)
+        
+        def _transform(self, original, code):
+            msg = list(original)
+            for k in range(len(msg)):
+                if msg[k].isupper():
+                    j = ord(msg[k]) - ord('A')
+                    msg[k] = code[j]
+            return ''.join(msg)
 
-cipher = CaesarCipher(3)
-message = "THE EAGLE IS IN PLAY; MEET AT JOE'S."
-coded = cipher.encrypt(message)
-print(f"Encrypted message: {coded}")
-decoded = cipher.decrypt(coded)
-print(f"Decrypted message: {decoded}")
+    cipher = CaesarCipher(3)
+    message = "THE EAGLE IS IN PLAY; MEET AT JOE'S."
+    coded = cipher.encrypt(message)
+    print(f"Encrypted message: {coded}")
+    decoded = cipher.decrypt(coded)
+    print(f"Decrypted message: {decoded}")
 
+    r, c, = 3, 3
+    data = [[' '] * c for _ in range(r)]
+    print(data)
+
+    class TicTacToe:
+        def __init__(self):
+            self._board = [[' '] * 3 for _ in range(3)]
+            self._player = 'X'
+        
+        def mark(self, i, j):
+            if not (0 <= i <= 2 and 0 <= j <= 2):
+                raise ValueError('invalid position')
+            if self._board[i][j] != ' ':
+                raise ValueError('board position occupied')
+            self._board[i][j] = self._player
+            if self._player == 'X':
+                self._player = 'O'
+            else:
+                self._player = 'X'
+        
+        def _is_winner(self, mark):
+            board = self._board
+            return (mark == board[0][0] == board[0][1] == board[0][2] or mark == board[1][0] == board[1][1] == board[1][2] or mark == board[2][0] == board[2][1] == board[2][2] or mark == board[0][0] == board[1][0] == board[2][0] or mark == board[1][0] == board[1][1] == board[1][2] or mark == board[2][0] == board[2][1] == board[2][2] or mark == board[0][0] == board[1][1] == board[2][2] or mark == board[2][0] == board[1][1] == board[0][2])
+        
+        def winner(self):
+            for mark in 'XO':
+                if self._is_winner(mark):
+                    return mark
+            return None
+        
+        def __str__(self):
+            rows = ['|'.join(row) for row in self._board]
+            return '\n-----\n'.join(rows)
+
+    game = TicTacToe()
+    game.mark(1, 1)
+    game.mark(0, 0)
+    game.mark(1, 0)
+    game.mark(1, 2)
+    game.mark(0, 2)
+    game.mark(2, 1)
+    game.mark(2, 0)
+    print(game.winner())
+    print(str(game))
         
