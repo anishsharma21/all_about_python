@@ -1,5 +1,6 @@
 import sys
 import ctypes
+from random import randint
 
 def skip():
     n = 10
@@ -169,4 +170,76 @@ def insertion_sort(arr):
     game.mark(2, 0)
     print(game.winner())
     print(str(game))
+
+    last_size = 0
+    data = []
+    for k in range(1, 100):
+        size = sys.getsizeof(data)
+        if size != last_size:
+            last_size = size
+            print(f"Number of elements: {len(data)}, Size in bytes: {size}")
+        data.append(None)
+    for k in range(1, 100):
+        size = sys.getsizeof(data)
+        if size != last_size:
+            last_size = size
+            print(f"Number of elements: {len(data)}, Size in bytes: {size}")
+        data.pop()
+
+    class DynamicArray:
+        def __init__(self, capacity=1):
+            self._n = 0
+            self._capacity = capacity
+            self._array = self._make_array(self._capacity)
         
+        def _make_array(self, capacity):
+            return (capacity * ctypes.py_object)()
+        
+        def __len__(self):
+            return self._n
+        
+        def __getitem__(self, k): # accounts for negative indices
+            if not k < self._n or k < 0 and not k + self._n >= 0:
+                raise IndexError(f"invalid index: {k}")
+            if k < 0:
+                k += self._n
+            return self._array[k]
+        
+        def append(self, value):
+            if self._n == self._capacity:
+                self.resize(self._capacity * 2)
+            self._array[self._n] = value
+            self._n += 1
+        
+        def pop(self):
+            self._n -= 1
+            if self._n < 0.25 * self._capacity:
+                self.resize(self._capacity // 2)
+
+        def resize(self, new_capacity):
+            new_arr = self._make_array(new_capacity)
+            for k in range(self._n):
+                new_arr[k] = self._array[k]
+            self._array = new_array
+            self._capacity = new_capacity
+
+    data = [[randint(1, 10)] * 5 for _ in range(5)]
+    print(sum([sum(row) for row in data]))
+
+    last_size = 0
+    data = []
+    for k in range(1, 100):
+        size = sys.getsizeof(data)
+        if size != last_size:
+            last_size = size
+            print(f"Number of elements: {len(data)}, Size in bytes: {size}")
+        data.append(randint(1, 100))
+    print()
+    last_size = 0
+    data = []
+    for k in range(1, 100):
+        size = sys.getsizeof(data)
+        if size != last_size:
+            last_size = size
+            print(f"Number of elements: {len(data)}, Size in bytes: {size}")
+        data.append(None)
