@@ -235,3 +235,11 @@ def skip():
 
     my_arr = [1, 2, 5, 6, 7, 8, 13, 14, 18, 24, 55, 4]
     print(find_numbers_sum(my_arr, 62)) 
+
+    def iterative_power(n, x):
+        f = 1
+        for i in range(1, x+1):
+            f *= n
+        return f
+
+    print(iterative_power(9, 2))
