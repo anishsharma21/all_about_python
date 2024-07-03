@@ -78,3 +78,51 @@ class Scoreboard:
                 self._board[j] = self._board[j-1]
                 j -= 1
             self._board[j] = entry
+
+count = 0
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        base = i
+        track = i - 1
+        while track >= 0:
+            global count
+            count += 1
+            if arr[base] < arr[track]:
+                arr[base], arr[track] = arr[track], arr[base]
+                base -= 1
+            else:
+                break
+            track -= 1
+
+my_arr = [2, 1, 4, 3, 9, 0, -5]
+insertion_sort(my_arr)
+print(my_arr)
+print(count)
+
+class CaesarCipher:
+    def __init__(self, shift):
+        self._backward = ''.join([chr((k + shift) % 26+ ord('A')) for k in range(26)])
+        self._forward = ''.join([chr((k - shift) % 26 + ord('A')) for k in range(26)])
+    
+    def encrypt(self, secret):
+        return self._transform(secret, self._forward)
+    
+    def decrypt(self, secret):
+        return self._transform(secret, self._backward)
+    
+    def _transform(self, original, code):
+        msg = list(original)
+        for k in range(len(msg)):
+            if msg[k].isupper():
+                j = ord(msg[k]) - ord('A')
+                msg[k] = code[j]
+        return ''.join(msg)
+
+cipher = CaesarCipher(3)
+message = "THE EAGLE IS IN PLAY; MEET AT JOE'S."
+coded = cipher.encrypt(message)
+print(f"Encrypted message: {coded}")
+decoded = cipher.decrypt(coded)
+print(f"Decrypted message: {decoded}")
+
+        
