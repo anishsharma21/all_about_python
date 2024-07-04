@@ -1,6 +1,7 @@
 import sys
 import ctypes
 from random import randint
+from time import time
 
 def skip():
     n = 10
@@ -243,3 +244,29 @@ def insertion_sort(arr):
             last_size = size
             print(f"Number of elements: {len(data)}, Size in bytes: {size}")
         data.append(None)
+
+
+string = ''
+time_initial = time()
+for i in range(1000):
+    string += 'a'
+time_final = time()
+print(time_final - time_initial)
+
+string_list = []
+time_initial = time()
+for i in range(1000):
+    string_list.append('a')
+string = ''.join(string_list)
+time_final = time()
+print(time_final - time_initial)
+
+time_initial = time()
+string = ''.join(['a' for _ in range(1000)])
+time_final = time()
+print(time_final - time_initial)
+
+time_initial = time()
+string_generator = ''.join('a' for _ in range(1000))
+time_final = time()
+print(time_final - time_initial)
