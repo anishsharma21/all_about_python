@@ -69,10 +69,58 @@ class LinkedQueue:
         return first
     
     def enqueue(self, value):
-        tail = Node(value, None)
+        tail = self.Node(value, None)
         if self.is_empty():
             self.head = tail
         else:
             self.tail._next = tail
         self.tail = tail
         self.size += 1
+
+class CircularQueue:
+    class Node:
+        __slots__ = '_value', '_next'
+        def __init__(self, value, next):
+            self._value = value
+            self._next = next
+    
+    def __init__(self):
+        self.tail = None
+        self.size = 0
+    
+    def __len__(self):
+        return self.size
+    
+    def is_empty(self):
+        return self.size == 0
+    
+    def first(self):
+        return self.tail._next
+    
+    def dequeue(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        oldhead = self.tail._next
+        if self.size == 1:
+            self.tail = None
+        else:
+            self.tail = oldhead._next
+        self.size -= 1
+        return oldhead
+
+    def enqueue(self, value):
+        new_tail = self.Node(value, None)
+        if self.is_empty():
+            new_tail._next = new_tail
+            self.tail = new_tail
+        else:
+            new_tail._next = self.tail._next
+            self.tail._next = new_tail
+        self.tail = new_tail
+        self.size += 1
+    
+    def rotate(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        self.tail = self.tail._next
+    
