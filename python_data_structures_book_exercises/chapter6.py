@@ -138,3 +138,93 @@ def skip():
         return mid
 
     print(sqrt(8))
+    
+def transfer(s, t):
+    for element in s:
+        t.push(s.pop(element))
+    return t
+
+class ArrayStack:
+    def __init__(self, cap=4):
+        self._size = 0
+        self._data = [None] * cap
+     
+    def is_empty(self):
+        return len(self) == 0
+    
+    def __len__(self):
+        return self._size
+    
+    def push(self, e):
+        if self._size >= len(self._data):
+            self.resize(self._size * 2)
+        self._data[self._size] = e
+        self._size += 1
+    
+    def pop(self):
+        if self.is_empty():
+            raise Exception('stack is empty')
+        if self._size < int(0.25 * len(self._data)):
+            self.resize(len(self._data) // 2)
+        r = self._data[self._size - 1]
+        self._data[self._size] = None
+        self._size -= 1
+        return r
+    
+    def resize(self, cap):
+        old = self._data
+        self._data = [None] * cap
+        for k in range(self._size):
+            self._data[k] = old[k]
+        old = None
+
+# Existing code for context
+s = ArrayStack()
+print(len(s))  # Should print 0
+print(s.is_empty())  # Should print True
+
+# Additional print statements for testing
+s.push(10)
+print(len(s))  # Should print 1
+print(s.is_empty())  # Should print False
+
+s.push(20)
+print(len(s))  # Should print 2
+
+s.push(30)
+print(len(s))  # Should print 3
+
+s.push(40)
+print(len(s))  # Should print 4
+
+s.push(50)
+print(len(s))  # Should print 5, triggers resize
+
+print(s.pop())  # Should print 50
+print(len(s))  # Should print 4
+
+print(s.pop())  # Should print 40
+print(len(s))  # Should print 3
+
+print(s.pop())  # Should print 30
+print(len(s))  # Should print 2, triggers resize
+
+print(s.pop())  # Should print 20
+print(len(s))  # Should print 1
+
+print(s.pop())  # Should print 10
+print(len(s))  # Should print 0
+
+# Trying to pop from an empty stack
+try:
+    s.pop()
+except Exception as e:
+    print(e)  # Should print 'stack is empty'
+
+# Pushing again after popping everything
+s.push(60)
+print(len(s))  # Should print 1
+print(s.is_empty())  # Should print False
+
+s.push(70)
+print(len(s))  # Should print 2
