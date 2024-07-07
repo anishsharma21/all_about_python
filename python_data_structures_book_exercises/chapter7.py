@@ -261,3 +261,19 @@ class PositionalList(_DoublyLinkedBase):
         old_value = original._element
         original._element = e
         return old_value
+
+def insertion_sort(data: list):
+    for i in range(1, len(data)):
+        key = data[i]
+        j = i - 1
+        while j >= 0 and key < data[j]:
+            data[j + 1] = data[j]
+            j -= 1
+        data[j + 1] = key
+    return data
+
+data = [5, -7, 99, 99, 0]
+print(insertion_sort(data))
+
+
+            
