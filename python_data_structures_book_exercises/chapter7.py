@@ -277,34 +277,15 @@ def insertion_sort(L):
                 L.delete(pivot)
                 L.add_before(walk, value)
 
-def insertion_sort(data: list) -> list:
+def insertion_sort(data):
     for i in range(1, len(data)):
-        key = data[i]
+        marker = data[i]
         j = i - 1
-        while j >= 0 and key < data[j]:
+        while j >= 0 and marker < data[j]:
             data[j+1] = data[j]
             j -= 1
-        data[j+1] = key
-        
-data = [2, 1, 4, 3, -5]
+        data[j+1] = marker
+
+data = [1, 1, 4, -4, 3, 11, 2, -9]
 insertion_sort(data)
 print(data)
-
-def sqrt(x):
-    l, r = 0, x
-    res = 0
-    while l <= r:
-        mid = l + ((r - l) // 2)
-        if mid * mid > x:
-            r = mid - 1
-        elif mid * mid < x:
-            l = mid + 1
-            res = mid
-        else:
-            return mid
-    return res
-
-print(sqrt(5))
-print(sqrt(12))
-print(sqrt(16))
-

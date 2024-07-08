@@ -82,3 +82,16 @@ class PositionalList(_DoublyLinkedBase):
             yield cur.element()
             cur = seld.after(cur)
 
+def insertion_sort(L):
+    for i in range(1, len(L)):
+        key = L.first().after()
+        for k in range(i):
+            key = L.after(key)
+        walk = L.before(key)
+        j = i - 1
+        while j >= 0 and key.element() < walk.element():
+            L.replace(walk, walk.after())
+            walk = L.before(walk)
+            j -= 1
+        L.replace(walk.after(), key)
+
