@@ -95,3 +95,61 @@ def insertion_sort(L):
             j -= 1
         L.replace(walk.after(), key)
 
+class Empty(Exception):
+    pass
+
+class ArrayQueue:
+    __slots__ = 'data', 'size', 'head'
+    
+    def __init__(self, capacity=4):
+        self.head = 0
+        self.size = 0
+        self.data = [None] * capacity
+    
+    def __len__(self):
+        return self.size
+    
+    def is_empty(self):
+        return self.size == 0
+    
+    def first(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        return self.data[self.head]
+    
+    def enqueue(self, v):
+        if len(self.data) == self.size:
+            self.resize(self.size * 2)
+        self.data[(self.head + self.size) % len(self.data)] = v
+        self.size += 1
+    
+    def dequeue(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        removed = self.data[self.head]
+        self.data[self.head] = None
+        self.head += 1
+        self.size -= 1
+        return removed
+    
+    def resize(self, new_capacity):
+        original = self.data
+        self.data = [None] * new_capacity
+        for k in range(len(original)):
+            self.data[k] = original[k]
+        self.head = 0
+    
+    def __str__(self):
+        queue_str = ''
+        for i in range(self.size):
+            queue_str += f"{self.data[(self.head + i) % len(self.data)]} <-- "
+        return queue_str
+
+aq = ArrayQueue()
+for i in range(1, 8):
+    print(len(aq.data))
+    aq.enqueue(i)
+print(aq)
+aq.dequeue()
+print(aq)
+
