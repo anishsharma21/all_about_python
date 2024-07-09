@@ -145,11 +145,117 @@ class ArrayQueue:
             queue_str += f"{self.data[(self.head + i) % len(self.data)]} <-- "
         return queue_str
 
-aq = ArrayQueue()
-for i in range(1, 8):
-    print(len(aq.data))
-    aq.enqueue(i)
-print(aq)
-aq.dequeue()
-print(aq)
+class LinkedStack:
+    class Node:
+        __slots__ = 'value', 'next'
+        
+        def __init__(self, value, next):
+            self.value = value
+            self.next = next
+    
+    def __init__(self):
+        self.head = None
+        self.size = 0
+    
+    def __len__(self):
+        return self.size
 
+    def is_empty(self):
+        return self.size == 0
+    
+    def peek(self):
+        if self.is_empty():
+            raise Empty('stack is empty')
+        return self.head.value
+    
+    def push(self, v):
+        self.head = self.Node(v, self.head)
+        self.size += 1
+    
+    def pop(self):
+        if self.is_empty():
+            raise Empty('stack is empty')
+        head = self.head
+        self.head = self.head.next
+        head.next = None
+        self.size -= 1
+        return head.value
+
+class LinkedQueue:
+    class Node:
+        __slots__ = 'value', 'next'
+        
+        def __init__(self, value, next):
+            self.value = value
+            self.next = next
+    
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+    
+    def __len__(self):
+        return self.size
+    
+    def is_empty(self):
+        return self.size == 0
+    
+    def peek(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        return self.head.value
+    
+    def dequeue(self):
+        if self.is_empty():
+            raise Empty('queue is empty')
+        answer = self.head.value
+        if self.size == 1:
+            self.head = self.tail = None
+        else:
+            self.head = self.head.next
+        self.size -= 1
+        return answer
+    
+    def enqueue(self, e):
+        self.size += 1
+        new_node = self.Node(e, None)
+        if self.is_empty():
+            self.head = self.tail = new_node
+        elif self.size == 1:
+            self.tail = new_node
+            self.head.next = self.tail
+        else:
+            self.tail.next = new_node
+            self.tail = self.tail.next
+        
+class _DoublyLinkedBase:
+    class Node:
+        def __init__(self, value, prev, next):
+            self.value = value
+            self.prev = prev
+            self.next = next
+    
+    def __init__(self):
+        self.header, self.trailer = self.Node(None, None, None), self.Node(None, None, None)
+        self.header.next, self.trailer.next = self.trailer, self.header
+        self.size = 0
+    
+    def __len__(self):
+        return self.size
+
+    def is_empty(self):
+        return self.size == 0
+    
+    def _insert_between(self, e, predecessor, successor):
+        new = self.Node(e, predecessor, successor)
+        predecessor.next, successor.prev = new, new
+        self.size += 1
+        return new
+    
+    def _delete_node(self, node):
+        predecessor, successor = node.prev, node.next
+        predecessor.next, successor.prev = successor, predecessor
+        self.size -= 1
+        value = node.value
+        node.prev = node.next = node.value = None
+        return value
