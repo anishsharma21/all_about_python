@@ -53,4 +53,3 @@ def merge_sort_optimized(data):
 
 data = [4, 1, 3, 2, -1]
 print(merge_sort_optimized(data))
-
