@@ -58,6 +58,16 @@ class Tree:
             p = self.root()
         return self._height2(p)
     
+    def breadthfirst(self):
+        if not self.is_empty():
+            fringe = deque()
+            fringe.append(self.root())
+            while not fringe.is_empty():
+                p = fringe.popleft()
+                yield p
+                for c in self.children(p):
+                    fringe.append(c)
+    
     def __iter__(self):
         for p in self.positions():
             yield p.element
@@ -100,16 +110,23 @@ class BinaryTree(Tree):
                 return self.right(parent)
             else:
                 return self.left(parent)
-            
-    def breadthfirst(self):
+    
+    def positions(self):
+        return self.inorder()
+    
+    def inorder(self):
         if not self.is_empty():
-            fringe = deque()
-            fringe.append(self.root())
-            while not fringe.is_empty():
-                p = fringe.popleft()
+            for p in self._subtree_inorder(self.root()):
                 yield p
-                for c in self.children(p):
-                    fringe.append(c)
+
+    def _subtree_inorder(self, p):
+        if self.left(p) is not None:
+            for other in self._subtree_inorder(self.left(p)):
+                yield other
+        yield p
+        if self.right(p) is not None:
+            for other in self._subtree_inorder(self.right(p)):
+                yield other
     
     def children(self, p):
         if self.left(p) is not None:
