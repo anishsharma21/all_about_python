@@ -32,6 +32,9 @@ class Tree:
     
     def is_empty(self):
         return len(self) == 0
+    
+    def positions(self):
+        return self.preorder()
 
     def depth(self, p):
         if self.is_root(p):
@@ -53,6 +56,32 @@ class Tree:
             p = self.root()
         return self._height2(p)
     
+    def __iter__(self):
+        for p in self.positions():
+            yield p.element
+            
+    def preorder(self):
+        if not self.is_empty():
+            for p in self._subtree_preorder(self.root()):
+                yield p
+    
+    def _subtree_preorder(self, p):
+        yield p
+        for c in self.children(p):
+            for other in self._subtree_preorder(c):
+                yield other
+    
+    def postorder(self):
+        if not self.is_empty():
+            for p in self._subtree_postorder(self.root()):
+                yield p
+    
+    def _subtree_postorder(self, p):
+        for c in self.children(p):
+            for other in self._subtree_postorder(c):
+                yield other
+        yield p
+   
 class BinaryTree(Tree):
     
     def left(self, p):
@@ -202,46 +231,3 @@ class LinkedBinaryTree(BinaryTree):
             node._right = t2._root
             t2._root = None
             t2._size = 0
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-        
-    
-    
-     
-         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
