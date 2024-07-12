@@ -1,3 +1,5 @@
+from collections import deque
+
 class Tree:
     class Position:
         def element(self):
@@ -98,6 +100,16 @@ class BinaryTree(Tree):
                 return self.right(parent)
             else:
                 return self.left(parent)
+            
+    def breadthfirst(self):
+        if not self.is_empty():
+            fringe = deque()
+            fringe.append(self.root())
+            while not fringe.is_empty():
+                p = fringe.popleft()
+                yield p
+                for c in self.children(p):
+                    fringe.append(c)
     
     def children(self, p):
         if self.left(p) is not None:
